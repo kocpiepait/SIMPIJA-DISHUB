@@ -1753,6 +1753,118 @@ section {
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
+.info-section {
+  padding: 60px 0;
+  color: #054a85;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.main-container {
+  flex: 3;
+  margin-right: 20px;
+  max-width: 70%;
+}
+
+.sidebar-container {
+  flex: 1;
+  max-width: 25%;
+}
+
+.info-card {
+  border: 1px solid #d3d3d3; /* Light gray border */
+  border-radius: 10px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  color: #054a85;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.info-card .info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #054a85; /* Background color for title */
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.info-card .info-content {
+  padding: 15px; /* Tambahkan padding di sini */
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.info-card .info-header h3 {
+  color: #fff; /* Text color for title */
+  margin: 0;
+  margin-right: 10px;
+  flex: 1; /* Fill remaining space */
+}
+
+.info-card .icon {
+  font-size: 40px;
+  color: #f6b024; /* Icon color */
+}
+
+.info-card .icon:hover {
+  color: #ffd700; /* Hover color for icons */
+}
+
+.tooltip-icon {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-icon .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #054a85;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip */
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-icon:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .info-container {
+    flex-direction: column;
+  }
+
+  .main-container,
+  .sidebar-container {
+    max-width: 100%;
+    margin-right: 0;
+  }
+}
+
 .blog {
   padding: 40px 0 20px 0;
 }
