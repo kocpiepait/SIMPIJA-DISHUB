@@ -1,0 +1,150 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f6f6f6;
+}
+
+h2,
+h3 {
+  margin: 0;
+  color: #054a85;
+}
+
+/* Auth Container */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.auth-card {
+  background-color: #fff;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.password-wrapper input {
+  border: none;
+  flex-grow: 1;
+  padding: 10px 0;
+  outline: none;
+}
+
+.eye-icon {
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #054a85;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #f6b024;
+  color: #fff;
+}
+
+.auth-link {
+  margin-top: 20px;
+  color: #054a85;
+}
+
+.auth-link a {
+  color: #f6b024;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+.bx-hide {
+  display: inline-block;
+}
+.bx-show {
+  display: inline-block;
+}
+
+/* Error Message Styles */
+.error {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Success Message Styles */
+.success {
+  color: green;
+  font-size: 16px;
+  margin-top: 5px;
+  background-color: #e6ffe6;
+  border: 1px solid green;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .auth-card {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    width: 100%;
+    padding: 10px;
+  }
+}
