@@ -1,6 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
+// Periksa apakah pengguna sudah login dan memiliki role 'user'
+if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
+  // Jika tidak, arahkan ke halaman login
   header("Location: autentikasi/login.php");
   exit();
 }
@@ -25,13 +27,16 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
     </div>
     <ul class="sidebar-links">
       <li>
-        <a href="../index.html"><i class="bx bx-home"></i>Kembali Ke Beranda</a>
+        <a href="../index.php"><i class="bx bx-home"></i>Kembali Ke Beranda</a>
       </li>
       <li>
         <a href="#progress-section"><i class="bx bx-line-chart"></i> Dashboard</a>
       </li>
       <li>
         <a href="profil.html"><i class="bx bx-user"></i> Profil</a>
+      </li>
+      <li>
+        <a href="autentikasi/logout.php" id="logout-link"><i class="bx bx-log-out"></i> Logout</a>
       </li>
     </ul>
   </div>
@@ -97,7 +102,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
 
   <!-- <div id="preloader"></div> -->
 
-  <script src="assets/js/dashboard.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
 </body>
 
 </html>

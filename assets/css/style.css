@@ -340,6 +340,32 @@ h6 {
   visibility: visible;
 }
 
+.btn_user {
+  width: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-custom {
+  background-color: transparent;
+  color: #fff;
+  outline: 2px solid rgba(6, 79, 142, 0.536);
+  border-radius: 50px;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: small;
+}
+
+/* Hover efek untuk tombol */
+.btn-custom:hover {
+  background-color: #f6b024;
+  color: #fff;
+}
+
 @media (max-width: 1366px) {
   .navbar .dropdown .dropdown ul {
     left: -90%;

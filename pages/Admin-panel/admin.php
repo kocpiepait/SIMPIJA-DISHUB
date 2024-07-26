@@ -1,10 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+// Periksa apakah pengguna sudah login dan memiliki role 'admin'
+if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+  // Jika tidak, arahkan ke halaman login
   header("Location: ../autentikasi/login.php");
   exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     </div>
     <ul class="sidebar-links">
       <li>
-        <a href="/index.html"><i class="bx bx-home"></i>kembali Ke Beranda</a>
+        <a href="../../index.php"><i class="bx bx-home"></i>kembali Ke Beranda</a>
       </li>
       <li>
         <a href="admin.html"><i class="bx bx-line-chart"></i> Dashboard</a>
@@ -37,6 +38,9 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
       </li>
       <li>
         <a href="admin-profil.html"><i class="bx bx-user"></i> Profil</a>
+      </li>
+      <li>
+        <a href="../autentikasi/logout.php" id="logout-link"><i class="bx bx-log-out"></i> Logout</a>
       </li>
     </ul>
   </div>
@@ -109,7 +113,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     </footer>
   </div>
 
-  <script src="admin.js"></script>
+  <script src="../../assets/js/dashboard.js"></script>
 </body>
 
 </html>

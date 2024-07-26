@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       // Arahkan pengguna berdasarkan peran mereka
       if ($role === 'admin') {
-        header("Location: ../../Admin-panel/admin.php");
+        header("Location: ../Admin-panel/admin.php");
       } else {
         header("Location: ../Dashboard.php");
       }
