@@ -307,85 +307,58 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("izinForm");
+  const inputs = form.querySelectorAll("input[required]");
+  const errorMessages = {
+    namaPengaju: "Nama Pengaju harus diisi",
+    alamatPengaju: "Alamat Pengaju harus diisi",
+    lokasi_kegiatan: "Lokasi Kegiatan harus diisi",
+    jenis_kegiatan: "Jenis Kegiatan harus diisi",
+    durasi: "Durasi harus diisi",
+    jalur_alternatif: "Jalur Alternatif harus diisi",
+    ktp: "Unggah KTP diperlukan",
+    suratKeterangan: "Unggah Surat Keterangan diperlukan",
+    gambarPeta: "Unggah Gambar Peta Lokasi diperlukan",
+    gambarJalan: "Unggah Gambar Jalan Alternatif diperlukan",
+  };
 
-  // Function to clear previous error messages
-  function clearErrors() {
-    const errorMessages = form.querySelectorAll(".error-message");
-    errorMessages.forEach((msg) => msg.remove());
-
-    // Remove error class from input fields
-    const errorInputs = form.querySelectorAll(".error");
-    errorInputs.forEach((input) => input.classList.remove("error"));
-  }
-
-  // Function to display error message
   function showError(input, message) {
-    const errorElement = document.createElement("div");
-    errorElement.classList.add("error-message");
-    errorElement.textContent = message;
-    input.parentElement.insertBefore(errorElement, input);
+    const errorMessageElement = input.nextElementSibling;
+    errorMessageElement.textContent = message;
     input.classList.add("error");
   }
 
-  // Function to validate form fields
+  function clearErrors() {
+    inputs.forEach((input) => {
+      const errorMessageElement = input.nextElementSibling;
+      errorMessageElement.textContent = "";
+      input.classList.remove("error");
+    });
+  }
+
   function validateForm(event) {
-    // Prevent default form submission
     event.preventDefault();
 
-    // Clear previous error messages
     clearErrors();
 
     let isValid = true;
     let firstErrorInput = null;
 
-    // Validate each input field
-    const lokasi = document.getElementById("lokasi");
-    const jenisKegiatan = document.getElementById("jenisKegiatan");
-    const lamaKegiatan = document.getElementById("lamaKegiatan");
-    const jalurAlternatif = document.getElementById("jalurAlternatif");
-    const dokumen = document.getElementById("dokumen");
+    inputs.forEach((input) => {
+      if (!input.value.trim()) {
+        showError(input, errorMessages[input.id]);
+        if (!firstErrorInput) firstErrorInput = input;
+        isValid = false;
+      }
+    });
 
-    if (!lokasi.value.trim()) {
-      showError(lokasi, "Lokasi harus diisi.");
-      if (!firstErrorInput) firstErrorInput = lokasi;
-      isValid = false;
-    }
-
-    if (!jenisKegiatan.value.trim()) {
-      showError(jenisKegiatan, "Jenis Kegiatan harus diisi.");
-      if (!firstErrorInput) firstErrorInput = jenisKegiatan;
-      isValid = false;
-    }
-
-    if (!lamaKegiatan.value.trim()) {
-      showError(lamaKegiatan, "Lama Kegiatan harus diisi.");
-      if (!firstErrorInput) firstErrorInput = lamaKegiatan;
-      isValid = false;
-    }
-
-    if (!jalurAlternatif.value.trim()) {
-      showError(jalurAlternatif, "Jalur Alternatif harus diisi.");
-      if (!firstErrorInput) firstErrorInput = jalurAlternatif;
-      isValid = false;
-    }
-
-    if (!dokumen.files.length) {
-      showError(dokumen, "Dokumen harus diunggah.");
-      if (!firstErrorInput) firstErrorInput = dokumen;
-      isValid = false;
-    }
-
-    // Scroll to the first error input
     if (firstErrorInput) {
       firstErrorInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    // If the form is valid, submit it
     if (isValid) {
       form.submit();
     }
   }
 
-  // Add event listener to the form
   form.addEventListener("submit", validateForm);
 });

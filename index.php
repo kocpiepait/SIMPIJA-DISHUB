@@ -64,32 +64,32 @@ session_start();
       <nav id="navbar" class="navbar">
         <ul>
           <li>
-            <a class="nav-link scrollto active" href="#hero">Beranda</a>
+            <a class="nav-link scrollto active" href="#">Beranda</a>
           </li>
-          <li><a class="nav-link scrollto" href="blog.html">Informasi</a></li>
+          <li><a class="nav-link scrollto" href="pages/blog.php">Informasi</a></li>
           <li class="dropdown">
             <a href="#"><span>Layanan</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="pengajuan-izinjalan.html">Pengajuan Rekom</a></li>
+              <li><a href="pages/pengajuan-izinjalan.php">Pengajuan Rekom</a></li>
               <li><a href="#">Jalan Alteratif</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="kontak.html">Kontak</a></li>
+          <li><a class="nav-link scrollto" href="pages/kontak.html">Kontak</a></li>
+          <?php if (!isset($_SESSION['id_pengguna'])) : ?>
+            <li><a class="btn-custom" href="pages/autentikasi/login.php">Masuk</a></li>
+            <li><a class="btn-custom" href="pages/autentikasi/registrasi.php">Daftar</a></li>
+          <?php else : ?>
+            <?php if ($_SESSION['role'] == 'admin') : ?>
+              <li><a class="btn-custom" href="pages/Admin-panel/admin.php">Dashboard Admin</a></li>
+            <?php else : ?>
+              <li><a class="btn-custom" href="pages/Dashboard.php">Dashboard Pengguna</a></li>
+            <?php endif; ?>
+          <?php endif; ?>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
-      <div class="btn_user">
-        <?php if (!isset($_SESSION['id_pengguna'])) : ?>
-          <a class="btn-custom" href="pages/autentikasi/login.php">Masuk</a>
-          <a class="btn-custom" href="pages/autentikasi/registrasi.php">Daftar</a>
-        <?php else : ?>
-          <?php if ($_SESSION['role'] == 'admin') : ?>
-            <a class="btn-custom" href="pages/Admin-panel/admin.php">Dashboard Admin</a>
-          <?php else : ?>
-            <a class="btn-custom" href="pages/Dashboard.php">Dashboard Pengguna</a>
-          <?php endif; ?>
-        <?php endif; ?>
-      </div>
+
+
       <!-- .navbar -->
     </div>
   </header>
@@ -246,7 +246,7 @@ session_start();
 
         <div class="content">
           <div class="pt-4 pt-lg-0">
-            <a href="pengajuan-izinjalan.html" class="btn-learn-more">Pengajuan Rekom Izin Jalan</a>
+            <a href="pages/pengajuan-izinjalan.php" class="btn-learn-more">Pengajuan Rekom Izin Jalan</a>
           </div>
         </div>
       </div>

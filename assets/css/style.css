@@ -241,7 +241,7 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 3px;
+  padding: 10px 15px;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
@@ -259,10 +259,10 @@ h6 {
 .navbar > ul > li > a:before {
   content: "";
   position: absolute;
-  width: 100%;
+  width: 50%;
   height: 2px;
   bottom: -5px;
-  left: 0;
+  left: 19px;
   background-color: #f6b024;
   visibility: hidden;
   width: 0px;
@@ -273,7 +273,7 @@ h6 {
 .navbar li:hover > a:before,
 .navbar .active:before {
   visibility: visible;
-  width: 100%;
+  width: 50%;
 }
 
 .navbar a:hover,
@@ -281,6 +281,12 @@ h6 {
 .navbar .active:focus,
 .navbar li:hover > a {
   color: #fff;
+}
+
+/* Menghapus garis bawah untuk tombol khusus */
+.navbar .btn-custom:before,
+.navbar .btn-custom:hover:before {
+  content: none;
 }
 
 .navbar .dropdown ul {
@@ -338,13 +344,6 @@ h6 {
   top: 0;
   left: 100%;
   visibility: visible;
-}
-
-.btn_user {
-  width: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .btn-custom {
@@ -494,6 +493,10 @@ h6 {
 
 .navbar-mobile .dropdown > .dropdown-active {
   display: block;
+}
+
+.btn-custom {
+  outline: none;
 }
 
 /*--------------------------------------------------------------

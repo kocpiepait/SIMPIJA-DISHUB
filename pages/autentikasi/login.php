@@ -26,19 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $_SESSION['role'] = $role;
 
       // Arahkan pengguna berdasarkan peran mereka
-      if ($role === 'admin') {
-        header("Location: ../Admin-panel/admin.php");
+      if (isset($_SESSION['redirect_to'])) {
+        $redirect_url = $_SESSION['redirect_to'];
+        unset($_SESSION['redirect_to']);
+        header("Location: $redirect_url");
       } else {
-        header("Location: ../Dashboard.php");
+        if ($_SESSION['role'] == 'admin') {
+          header("Location: ../Admin-panel/admin.php");
+        } else {
+          header("Location: ../Dashboard.php");
+        }
       }
       exit();
     } else {
-      $error = "Password salah";
+      $_SESSION['error'] = "Password salah.";
     }
   } else {
-    $error = "Nama pengguna tidak ditemukan";
+    $_SESSION['error'] = "Username tidak ditemukan.";
   }
-  $stmt->close();
 }
 ?>
 

@@ -1,11 +1,27 @@
 <?php
 session_start();
+require_once '../api/db.php';
+
 // Periksa apakah pengguna sudah login dan memiliki role 'user'
 if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "user") {
   // Jika tidak, arahkan ke halaman login
   header("Location: autentikasi/login.php");
   exit();
 }
+
+// Mendapatkan pesan sukses jika ada
+$success_message = isset($_SESSION['success_message']) ? $_SESSION['success_message'] : '';
+unset($_SESSION['success_message']);
+
+// Mendapatkan data pengajuan pengguna dari database
+$id_pengguna = $_SESSION['id_pengguna'];
+$sql = "SELECT * FROM pengajuan WHERE id_pengguna = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $id_pengguna);
+$stmt->execute();
+$result = $stmt->get_result();
+$pengajuan = $result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +65,16 @@ if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["
         <div class="dashboard-header">
           <h2>Dashboard Pengguna</h2>
         </div>
+        <?php if ($success_message) : ?>
+          <div class="success">
+            <?php echo $success_message; ?>
+          </div>
+        <?php endif; ?>
+        <?php if (isset($_GET['success'])) : ?>
+          <div class="success-message">
+            Data berhasil diupdate.
+          </div>
+        <?php endif; ?>
         <div class="dashboard-content">
           <div class="summary-cards">
             <div class="summary-card">
@@ -71,24 +97,49 @@ if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["
 
           <div id="progress-section" class="submission-list">
             <h3>Progress Pengajuan</h3>
+            <button id="addDataBtn" class="btn-add"><i class="bx bx-plus"></i> Tambah Pengajuan</button>
             <div class="progress-table">
               <table>
                 <thead>
                   <tr>
-                    <th>No.</th>
-                    <th>Lokasi</th>
+                    <th>ID Pengajuan</th>
+                    <th>Nama Pengaju</th>
+                    <th>Alamat Pengaju</th>
+                    <th>Lokasi Kegiatan</th>
                     <th>Jenis Kegiatan</th>
-                    <th>Lama Kegiatan</th>
-                    <th>Jalur Alternatif</th>
+                    <th>Durasi</th>
                     <th>Status</th>
+                    <th>Tanggal Dibuat</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody id="progressBody">
-                  <!-- Data will be populated here dynamically -->
+                  <?php foreach ($pengajuan as $row) : ?>
+                    <tr>
+                      <td><?php echo $row['id_pengajuan']; ?></td>
+                      <td><?php echo $row['nama_pengaju']; ?></td>
+                      <td><?php echo $row['alamat_pengaju']; ?></td>
+                      <td><?php echo $row['lokasi_kegiatan']; ?></td>
+                      <td><?php echo $row['jenis_kegiatan']; ?></td>
+                      <td><?php echo $row['durasi']; ?></td>
+                      <td><?php echo $row['status']; ?></td>
+                      <td><?php echo $row['tanggal_dibuat']; ?></td>
+                      <td class="action-buttons">
+                        <button class="btn-edits" data-id="<?php echo $row['id_pengajuan']; ?>">
+                          <i class="bx bxs-edit"></i>Edit
+                        </button>
+                        <button class="btn-delete"><i class="bx bxs-trash"></i>Hapus</button>
+                        <button class="btn-detail" data-id="<?php echo $row['id_pengajuan']; ?>">
+                          <i class="bx bxs-detail"></i>Detail
+                        </button>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
     </section>
 
@@ -99,6 +150,78 @@ if (!isset($_SESSION["id_pengguna"]) || !isset($_SESSION["role"]) || $_SESSION["
       </div>
     </footer>
   </div>
+
+  <!-- Modal Detail -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Detail Pengajuan</h2>
+      <p id="detailContent"></p>
+    </div>
+  </div>
+
+  <!-- Modal untuk tambah data -->
+  <div id="addDataModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="izinForm" class="form-modern" action="tambah-pengajuan.php" method="POST" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+          <label for="namaPengaju"><i class="bx bxs-user"></i> Nama Pengaju:</label>
+          <input type="text" id="namaPengaju" name="nama_pengaju" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="alamatPengaju"><i class="bx bxs-home"></i> Alamat Pengaju:</label>
+          <input type="text" id="alamatPengaju" name="alamat_pengaju" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="lokasi_kegiatan"><i class="bx bxs-map-pin"></i> Lokasi Kegiatan:</label>
+          <input type="text" id="lokasi_kegiatan" name="lokasi_kegiatan" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="jenis_kegiatan"><i class="bx bxs-briefcase"></i> Jenis Kegiatan:</label>
+          <input type="text" id="jenis_kegiatan" name="jenis_kegiatan" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="durasi"><i class="bx bxs-time"></i> Durasi:</label>
+          <input type="text" id="durasi" name="durasi" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="jalur_alternatif"><i class="bx bxs-directions"></i> Jalur Alternatif:</label>
+          <input type="text" id="jalur_alternatif" name="jalan_alternatif" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="ktp"><i class="bx bxs-file"></i> Unggah KTP:</label>
+          <input type="file" id="ktp" name="ktp" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="suratKeterangan"><i class="bx bxs-file"></i> Unggah Surat Keterangan:</label>
+          <input type="file" id="suratKeterangan" name="surat_keterangan" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="gambarPeta"><i class="bx bxs-image"></i> Unggah Gambar Peta Lokasi:</label>
+          <input type="file" id="gambarPeta" name="gambar_peta_lokasi" required />
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="gambarJalan"><i class="bx bxs-image"></i> Unggah Gambar Jalan Alternatif:</label>
+          <input type="file" id="gambarJalan" name="gambar_jalan_alternatif" required />
+          <span class="error-message"></span>
+        </div>
+        <button type="submit" class="submit-button">Ajukan Rekomendasi</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
 
   <!-- <div id="preloader"></div> -->
 

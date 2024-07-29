@@ -1,0 +1,89 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.form-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-con {
+  max-width: 800px;
+  margin: auto;
+}
+
+.form-head {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-button,
+.back-button {
+  display: inline-block;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #054a85;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.back-button {
+  background-color: #f6b024;
+}
+
+.submit-button:hover,
+.back-button:hover {
+  background-color: #f6b024;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+.submit-button:hover,
+.back-button:hover {
+  background-color: #f6b024;
+}
